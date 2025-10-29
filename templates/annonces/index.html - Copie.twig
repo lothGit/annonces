@@ -1,0 +1,63 @@
+{% extends 'base.html copy.twig' %}
+
+{% block title %}Hello AnnonceController!
+{% endblock %}
+{% block body %}
+	<div class="row">
+		{% block sidebar %}
+			<div class="col-4 sideBar">
+				{{parent()}}
+			</div>
+		{% endblock %}
+		{% block main %}
+			<div class="col-8 main">
+				<div class="row">
+					{% for annonce in annonces %}
+						<div class="col-sm-3" style="display-inline-block">
+							<div class="card border-secondary mb-3" style="max-width: 20rem;">
+								{%if annonce.image is empty%}
+									<div class="card-header"></div>
+									{% else%}
+									<div class="card-header">
+										<img src="{{asset(annonce.image.url) }}" alt="{{ annonce.image.alt }}" style="width:100%"/></div>
+									{%endif%}
+									<div class="card-header">{{annonce.titre}}</div>
+									<div class="card-body">
+										<p class="card-text">{{ annonce.description }}</p>
+										<h5 class="card-title">{{ annonce.lieu }}</h5>
+										{#<h5 class="card-title">{{ annonce.date|date('d-m-Y') }}</h5>#}
+										<a href="{{ url('annonce.details',{'id':annonce.id})}}">Details de l'annonce</a>
+										{% if annonces|length == 1 %}
+											<a href="{{path('annonce.edit', {'id':annonce.id})}}">Modifier</a>
+										{% endif %}
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+					{% if annonce is defined %}
+						{%for annonce in annonce %}
+							<h4 style="width:100%;text-align:center;background-color:#33CAFF">{{annonce.titre}}</h4>
+							<p>
+								<b>Description du poste:
+								</b>
+								{{annonce.description}}</p>
+							<p>
+								<b>Date de publication:</b>
+								{{annonce.publishAt}}</p>
+							<p>
+								<b>Lieu:</b>
+								{{annonce.lieu}}</p>
+							<p>
+								<b>Rémunération:</b>
+								{{annonce.remuneration}}</p>
+						{% endfor %}
+					{% endif %}
+				</div>
+			</div>
+		{% endblock %}
+	</div>
+{% endblock %}
+{% block footer1 %}iuiouoiuiou{% endblock %}
+{% block footer2 %}mmmmmmmmmm{% endblock %}
+

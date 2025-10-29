@@ -1,0 +1,29 @@
+{% extends 'base.html copy.twig' %}
+
+{% block title %}Formulaire d'ajout{% endblock %}
+{% block body %}
+<div class="row">
+{% block sidebar %}
+<div class="col-4 sideBar">
+				{{parent()}}
+</div>
+{% endblock %}
+{% block main %}
+<div class="col-8 main">
+			<h4>Ajout d'une annonce</h4>
+				{{ include('annonces/partials/formulaire.html.twig') }}				
+			</div>
+{% endblock %}
+</div>
+{% block footer %}
+{% endblock %}
+
+        
+			
+			
+		
+
+{% endblock %}
+
+
+

@@ -1,0 +1,15 @@
+.sideBar{
+    background-color: #b1b1e7;
+    padding-top:20px;
+    border:2px solid black;
+    border-radius: 5px
+}
+.main{
+    background-color:#ebebf9;
+    padding-top:20px;
+    border:2px solid black;
+	border-radius: 5px
+}
+.container{
+    margin-top:10px;
+}

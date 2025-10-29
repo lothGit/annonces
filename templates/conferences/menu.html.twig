@@ -1,0 +1,9 @@
+<h5>Conferences</h5>
+{%for conference in conferences %}
+    <a href="{{ url('conference.details',{'id':conference.id})}}">{{conference.titre}}</a>
+{%endfor%}
+<br>
+<h5>Categories</h5>
+{%for categorie in categories %}
+    <a href="{{ url('categorie.details',{'id':categorie.id})}}">{{categorie.nom}}</a><br>
+{%endfor%}

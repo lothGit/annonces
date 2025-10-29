@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AnnonceController!{% endblock %}
+{% block body %}
+{% block sidebar %}
+{% endblock %}
+{% block main %}
+{% endblock %}
+{% block footer %}
+{% endblock %}
+    <div class="container" style="margin-top:10px;">
+       <div class="row">
+        <div class="col-sm-2"> 
+            <div> <p><a href="{{path("annonce.add")}}">Ajouter une annonce</a></p></div>
+            {{include('annonces/partials/menu.html.twig')}}     
+        </div>
+        {% for annonce in annonces %}
+        <div class="col-sm-3" style="display-inline-block">
+        <div class="card border-secondary mb-3" style="max-width: 20rem;"> 
+        {%if annonce.image is empty%}
+        <div class="card-header"></div>
+        {% else%}
+        <div class="card-header">
+        <img src="{{ asset(annonce.image.url) }}" alt="{{ annonce.image.alt }}" style="width:100%"  /></div>
+        {%endif%}
+        
+        <div class="card-header">{{annonce.titre}}</div>
+        <div class="card-body">
+        <p class="card-text">{{ annonce.description }}</p>
+        <h5 class="card-title">{{ annonce.lieu }}</h5>
+        {#<h5 class="card-title">{{ annonce.date|date('d-m-Y') }}</h5>#}
+        <a href="{{ url('annonce.details',{'id':annonce.id})}}">Details de l'annonce</a>
+        {% if annonces|length == 1 %}
+        <a href="{{path('annonce.edit', {'id':annonce.id})}}">Modifier</a>
+        {% endif %} 
+        </div>
+        </div>
+        </div>
+        {% endfor %}
+     </div>
+	</div>
+{% endblock %}

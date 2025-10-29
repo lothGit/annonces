@@ -1,0 +1,76 @@
+{% extends 'base.html copy.twig' %}
+
+{% block title %}User Profil
+{% endblock %}
+
+{% block body %}
+	<div class="row">
+		{% block sidebar %}
+			<div class="col-4 sideBar">
+				{{parent()}}
+			</div>
+		{% endblock %}
+		{% block main %}
+			<div class="col-8 main">
+				{% if app.request.session.get('mode') == "ouverture" %}
+					{{ app.request.session.set('mode','fermeture') }}
+					{% set mode = app.request.session.get('mode')%}
+					{{ dump(mode)}}
+				{% else %}
+					{{ app.request.session.set('mode','ouverture') }}
+					{% set mode = app.request.session.get('mode')%}
+					{{ dump(mode)}}
+				{% endif %}
+
+				<h4>Mon profil</h4>
+				<div class="row">
+					<div class="col-sm-3">
+						<h5>
+							<a href="{{ path('user.profil',{'id':app.user.id})~'?infos=infos' }}">Mes informations personnelles</a>
+						</h5>
+						<h5>
+							<a href="{{ path('user.profil',{'id':app.user.id})~'?infos=infos&annonces=annonces'}}">Mes annonces</a>
+						</h5>
+					</div>
+					{% if app.request.query.get('annonces') %}
+						{% if app.request.session.get('mode') == "ouverture" %}
+							{% else %}
+								<ul>
+									{% for annonce in annonces %}
+										<li>
+											<a href="{{path('user.annonce',{idAnnonce:annonce.id})~'?annonces=annonces&commentaires=commentaires'}}">{{annonce.titre}}</a>
+										</li>
+									{% endfor %}
+								</ul>
+						{% endif %}
+					{% endif %}
+
+				</div>
+				<div class="col-sm-9">
+					{% if app.request.query.get('infos') %}
+						<p>
+							<i>prénom :
+								{{ app.user.firstName}}</i><br>
+							<i>nom :
+								{{ app.user.lastName}}</i><br>
+							<i>email :
+								{{ app.user.email}}</i><br>
+							<i>téléphone :
+								{{ app.user.telephone}}</i><br>
+						</p>
+					{% endif %}
+					{% if app.request.query.get('commentaires') %}
+						<h5>titre annonce :
+							{{ commentaires[0].annonce.titre }}</h5>
+						{% for commentaire in commentaires %}
+							<i>{{ commentaire.pseudo}}</i><br>
+							<i>{{ commentaire.content}}</i><br><br>
+						{% endfor %}
+					{% endif %}
+				</div>
+
+			</div>
+		{% endblock %}
+	</div>
+	{% block footer %}{% endblock %}
+{% endblock %}

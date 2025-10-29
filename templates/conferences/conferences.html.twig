@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ConferencsController!{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+        <div class="col-sm-2"> 
+            <div> <p><a href="{{path("conference.add")}}">Ajouter une conférence</a></p></div>
+            {{include('conferences/partials/menu.html.twig')}}     
+        </div>
+        {% for conference in conferences %}
+        <div class="col-sm-3" style="display-inline-block">
+        <div class="card border-secondary mb-3" style="max-width: 20rem;"> 
+        {%if conference.image is empty%}
+        <div class="card-header"></div>
+        {% else%}
+        <div class="card-header">
+        <img src="{{ conference.image.url }}" alt="{{ conference.image.alt }}" style="width:100%"  /></div>
+        {%endif%}
+        
+        <div class="card-header">{{ trunc(conference.titre)}}</div>
+        <div class="card-body">
+        <p class="card-text">{{ conference.description }}</p>
+        <h5 class="card-title">{{ conference.lieu }}</h5>
+        <h5 class="card-title">{{ conference.date|date('d-m-Y') }}</h5>
+        <a href="{{ url('conference.details',{'id':conference.id})}}">Details de la conférence</a>
+        {% if conferences|length == 1 %}
+        <a href="{{path('conference.edit', {'id':conference.id})}}">Modifier</a>
+        {% endif %} 
+        </div>
+        </div>
+        </div>
+        {% endfor %}
+     </div>
+</div>
+{% endblock %}

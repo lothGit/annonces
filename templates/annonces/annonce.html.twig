@@ -1,0 +1,76 @@
+{% extends 'base.html copy.twig' %}
+
+{% block title %}Annonce
+{% endblock %}
+{% block body %}
+	<div class="row">
+		{% block sidebar %}
+			<div class="col-4 sideBar">
+				{{parent()}}
+			</div>
+		{% endblock %}
+		{% block main %}
+			<div class="col-8 main">
+				<div class="card border-secondary mb-3" style="max-width: 35rem;">
+					{%if annonce.image is empty%}
+						<div class="card-header"></div>
+						{% else%}
+						<div class="card-header">
+							<img src="{{ asset(annonce.image.url) }}" alt="{{ annonce.image.alt }}" style="width:100%"/>
+						</div>
+						{%endif%}
+						<div class="card-header">
+							<b>{{ annonce.titre}}</b>
+						</div>
+						<div class="card-body">
+							<p class="card-text">
+								<b>description:</b>
+								{{ annonce.description }}</p>
+							<p class="card-title">
+								<b>lieu:</b>
+								{{ annonce.lieu }}</p>
+							<p class="card-title">
+								<b>publié le:</b>
+								{{ annonce.publishAt|date('d-m-Y') }}</p>
+							{#% if is_granted('ANNONCE_EDIT', annonce) %#}
+								<a href="{{path('annonce.edit', {'id':annonce.id})}}">Modifier</a>
+								<a href="{{path('annonce.supp', {'id':annonce.id})}}">Supprimer</a>
+							{#% endif %#}
+							<form action="">
+								<input type="hidden" name="idAnnonce" value="{{ annonce.id }}"/>
+								<input type="submit" value="commenter"/>
+							</form>
+							<a href="{{path('annonce.index')}}">Retour</a>
+							{% if app.request.query.get('like') == 1 %}
+								<a href="{{ path('favorite',{'id':annonce.id})~'?like=0'}}">unlike</a>
+							{% else %}
+								<a href="{{ path('favorite',{'id':annonce.id})~'?like=1'}}">like</a>
+							{% endif %}
+						</div>
+						{% if app.request.query.get('idAnnonce') is not null %}
+							{{ include('annonces/partials/_commentaire.html.twig') }}
+						{% endif %}
+						{%if annonce.commentaire is not null%}
+							{{annonce.commentaire|length~' commentaire(s)'}}
+						{% endif %}
+						{{annonce.favorite~ ' like(s)'}}
+						{%if annonce.commentaire is not null%}
+							{% for commentaire in annonce.commentaire %}
+								<i>---------------------------------------</i>
+								<i>auteur:
+									{{commentaire.pseudo}}</i><br>
+								<i>commentaire:
+									{{commentaire.content}}</i><br>
+								<i>date:
+									{{commentaire.publishedAt| date('d-m-Y')}}</i><br>
+							{% endfor %}
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		{% endblock %}
+	</div>
+	{% block footer %}{% endblock %}
+
+
+{% endblock %}

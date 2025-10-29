@@ -1,0 +1,36 @@
+{% if bouton == 'ajouter' %}
+{% set bouton = 'Ajouter une conférence' %}
+{% elseif bouton == 'modifier' %}
+{% set bouton = 'Modifier une conférence' %}
+{% else %}
+{% endif %} 
+
+<div class="container">
+{{ form_start(form) }}
+<div class="row">
+<div class="col-sm-4">
+{{ form_row(form.titre) }}
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+{{ form_row(form.description) }}
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+{{ form_row(form.lieu) }}
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+{{ form_row(form.categorie) }}
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+{#<input type="submit" value="{{ bouton }}" /> #}
+</div>
+</div>
+{{ form_end(form)}}
+</div>

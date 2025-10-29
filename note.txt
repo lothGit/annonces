@@ -1,0 +1,4 @@
+-GET: $_GET['nom']=>$this->request->query->get('nom')
+-POST: $_POST['nom']=>$this->request->request->get('nom')
+-COOKIE: $_GET['nom']=>$this->request->cookie->get('nom')
+-SESSION: $_SESSION['nom']=>$this->request->session->set('nom'n'jean')
